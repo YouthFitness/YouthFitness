@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Youth Fitnesss — simple, evidence-informed training and nutrition guidance for young lifters." />
+  <title>Youth Fitnesss | Train Smarter</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy-950: #07111f;
+      --navy-900: #0b1d32;
+      --navy-800: #102b46;
+      --teal-700: #0e6470;
+      --teal-500: #17a6a1;
+      --aqua: #7de7d2;
+      --copper-400: #f3c38b;
+      --copper-500: #d99a5a;
+      --copper-600: #a86b35;
+      --mist: #f4f7f6;
+      --paper: #ffffff;
+      --ink: #132033;
+      --muted: #637080;
+      --line: rgba(19,32,51,.10);
+      --shadow: 0 24px 65px rgba(7,23,39,.12);
+      --glow: 0 0 0 1px rgba(125,231,210,.16), 0 22px 65px rgba(23,166,161,.15);
+      --radius-lg: 30px;
+      --radius-md: 20px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: 'DM Sans', system-ui, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 8% 8%, rgba(23,166,161,.09), transparent 26%),
+        radial-gradient(circle at 92% 22%, rgba(221,181,90,.10), transparent 24%),
+        var(--mist);
+      line-height: 1.65;
+    }
+    a { color: inherit; text-decoration: none; }
+    button, input, textarea { font: inherit; }
+
+    .site-shell { min-height: 100vh; }
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(18px) saturate(140%);
+      background: linear-gradient(90deg, rgba(4,19,13,.96), rgba(7,43,27,.94), rgba(4,19,13,.96));
+      border-bottom: 1px solid rgba(243,195,139,.20);
+      box-shadow: 0 12px 30px rgba(0,0,0,.12);
+    }
+    .nav-wrap {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 76px;
+      gap: 20px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: white;
+      flex-shrink: 0;
+    }
+    .brand-mark {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: radial-gradient(circle at 30% 25%, #effffb 0%, var(--aqua) 42%, var(--teal-500) 100%);
+      color: var(--navy-950);
+      font-weight: 800;
+      box-shadow: 0 7px 24px rgba(221,181,90,.28);
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.14);
+    }
+    .brand-mark img { width: 100%; height: 100%; object-fit: cover; display:block; }
+    .brand-name { font-weight: 700; letter-spacing: -.02em; }
+    .brand-tag { font-size: .72rem; color: rgba(255,255,255,.62); margin-top: -3px; }
+
+    .nav-tabs {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    .tab-btn {
+      border: 1px solid transparent;
+      background: transparent;
+      color: rgba(255,255,255,.7);
+      padding: 9px 13px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: .2s ease;
+    }
+    .tab-btn:hover { color: white; background: rgba(255,255,255,.05); }
+    .tab-btn.active {
+      background: linear-gradient(135deg, rgba(243,195,139,.16), rgba(23,166,161,.18));
+      border-color: rgba(243,195,139,.34);
+      color: var(--copper-400);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.06);
+    }
+
+    .page { display: none; }
+    .page.active { display: block; animation: fade .28s ease; }
+    @keyframes fade { from { opacity: .1; transform: translateY(6px);} to { opacity: 1; transform: none;} }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 72% 28%, rgba(36,169,103,.28), transparent 28%),
+        radial-gradient(circle at 30% 78%, rgba(243,195,139,.10), transparent 22%),
+        linear-gradient(120deg, rgba(4,19,13,.98) 10%, rgba(5,46,27,.86) 55%, rgba(4,19,13,.68)),
+        url('https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=1800&q=85') center/cover;
+      color: white;
+    }
+    .hero::after {
+      content: "";
+      position:absolute;
+      inset:auto -10% -45% auto;
+      width:520px;
+      height:520px;
+      background: radial-gradient(circle, rgba(243,195,139,.12), transparent 65%);
+      pointer-events:none;
+    }
+    .hero-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 110px 24px 120px;
+      display: grid;
+      grid-template-columns: 1.18fr .82fr;
+      gap: 60px;
+      align-items: center;
+    }
+    .eyebrow {
+      display: inline-flex;
+      gap: 9px;
+      align-items: center;
+      color: var(--copper-400);
+      font-weight: 700;
+      letter-spacing: .09em;
+      text-transform: uppercase;
+      font-size: .76rem;
+    }
+    .dot { width: 7px; height: 7px; border-radius: 99px; background: var(--copper-400); }
+    h1, h2, h3 {
+      font-family: 'Playfair Display', Georgia, serif;
+      line-height: 1.05;
+      margin: 0 0 18px;
+    }
+    h1 { font-size: clamp(3.15rem, 6vw, 6rem); letter-spacing: -.045em; text-shadow: 0 10px 35px rgba(0,0,0,.18); }
+    h2 { font-size: clamp(2.1rem, 4vw, 3.4rem); letter-spacing: -.03em; }
+    h3 { font-size: 1.55rem; }
+    .hero p { color: rgba(255,255,255,.76); font-size: 1.1rem; max-width: 650px; }
+    .gold {
+      color: var(--copper-400);
+      background: linear-gradient(90deg, #fff2c0, var(--copper-400), #c99a42);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 30px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 13px 18px;
+      border-radius: 13px;
+      font-weight: 700;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-gold { background: linear-gradient(135deg, #fff1dc 0%, var(--copper-400) 42%, var(--copper-500) 100%); color: var(--navy-950); box-shadow: 0 12px 28px rgba(221,181,90,.24); }
+    .btn-dark { background: linear-gradient(135deg, rgba(255,255,255,.10), rgba(23,166,161,.16)); border-color: rgba(255,255,255,.16); color: white; }
+
+    .hero-card {
+      background: linear-gradient(145deg, rgba(255,255,255,.11), rgba(9,73,44,.18));
+      border: 1px solid rgba(243,195,139,.20);
+      border-radius: 28px;
+      padding: 26px;
+      box-shadow: 0 24px 60px rgba(0,0,0,.22), inset 0 1px 0 rgba(255,255,255,.08);
+      position:relative;
+      overflow:hidden;
+    }
+    .hero-card::before {
+      content:""; position:absolute; inset:0 auto auto 0; width:100%; height:3px;
+      background: linear-gradient(90deg, transparent, var(--copper-400), var(--teal-500), transparent);
+      opacity:.9;
+    }
+    .hero-card strong { display: block; font-size: 2.2rem; color: var(--copper-400); }
+    .hero-card span { color: rgba(255,255,255,.66); font-size: .92rem; }
+    .metric-grid { display:grid; grid-template-columns: repeat(2,1fr); gap: 12px; margin-top: 18px; }
+    .metric { padding: 16px; border-radius: 16px; background: linear-gradient(145deg, rgba(0,0,0,.18), rgba(23,166,161,.12)); border:1px solid rgba(255,255,255,.06); }
+
+    .section { max-width: 1180px; margin: 0 auto; padding: 86px 24px; }
+    .section-head { max-width: 780px; margin-bottom: 40px; }
+    .section-head p { color: var(--muted); font-size: 1.03rem; }
+    .kicker { color: var(--teal-500); font-weight: 800; font-size: .76rem; text-transform: uppercase; letter-spacing: .12em; }
+
+    .grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+    .grid-2 { display: grid; grid-template-columns: repeat(2,1fr); gap: 24px; }
+    .card {
+      background: linear-gradient(150deg, rgba(255,255,255,.98), rgba(252,248,237,.98));
+      border: 1px solid rgba(14,100,112,.10);
+      border-radius: var(--radius-md);
+      padding: 25px;
+      box-shadow: 0 10px 34px rgba(17,35,26,.055);
+      transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+    }
+    .card:hover { transform: translateY(-4px); box-shadow: var(--shadow); border-color: rgba(221,181,90,.28); }
+    .card p { color: var(--muted); margin: 0; }
+    .number {
+      width: 38px; height: 38px; border-radius: 12px;
+      display: grid; place-items: center;
+      background: linear-gradient(145deg, rgba(243,195,139,.28), rgba(23,166,161,.10)); color: #9b6234; font-weight: 800;
+      margin-bottom: 18px;
+    }
+    .tip-card { border-left: 4px solid var(--copper-500); }
+    .tip-card h3 { margin-bottom: 10px; }
+
+    .feature-image {
+      width: 100%; height: 360px; object-fit: cover; border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+      display: block;
+    }
+    .split { display:grid; grid-template-columns: .95fr 1.05fr; gap: 44px; align-items: center; }
+
+    .callout {
+      background:
+        radial-gradient(circle at 85% 10%, rgba(23,166,161,.30), transparent 28%),
+        linear-gradient(145deg, #062618, #0a452a 70%, #072519);
+      color: white;
+      border: 1px solid rgba(243,195,139,.14);
+      border-radius: var(--radius-lg);
+      padding: 34px;
+      margin-top: 24px;
+      box-shadow: 0 18px 48px rgba(7,23,39,.18);
+    }
+    .callout p { color: rgba(255,255,255,.7); }
+    .callout strong { color: var(--copper-400); }
+
+    .table-wrap { overflow-x:auto; border-radius: 18px; border: 1px solid var(--line); background: var(--paper); }
+    table { width:100%; border-collapse: collapse; min-width: 700px; }
+    th, td { padding: 16px 18px; text-align:left; border-bottom: 1px solid var(--line); }
+    th { background: linear-gradient(90deg, var(--navy-900), #16445a); color: white; font-size:.9rem; }
+    tr:last-child td { border-bottom: 0; }
+
+    .nutrition {
+      background:
+        radial-gradient(circle at 90% 0%, rgba(243,195,139,.15), transparent 24%),
+        linear-gradient(135deg, #082719, #0b4a2d 62%, #062216);
+      color: white;
+      border: 1px solid rgba(243,195,139,.16);
+      border-radius: var(--radius-lg);
+      padding: 44px;
+      box-shadow: 0 20px 52px rgba(7,23,39,.16);
+    }
+    .nutrition p { color: rgba(255,255,255,.73); }
+    .pill-row { display:flex; gap:9px; flex-wrap:wrap; margin-top:18px; }
+    .pill { padding: 8px 11px; border-radius:99px; background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.12); font-size:.86rem; }
+    .avoid-list { display:grid; gap:11px; margin-top: 22px; }
+    .avoid { display:flex; gap:12px; align-items:flex-start; }
+    .avoid b { color:var(--copper-400); }
+
+    .price-card { position:relative; overflow:hidden; }
+    .price-card::before { content:""; position:absolute; inset:0 0 auto 0; height:5px; background:linear-gradient(90deg,var(--teal-500),var(--aqua),var(--copper-500)); }
+    .price { font-size: 3.4rem; font-weight: 800; letter-spacing:-.04em; color:var(--navy-800); }
+    .price small { font-size:1rem; color:var(--muted); font-weight:600; }
+    .included { margin: 24px 0; padding:0; list-style:none; }
+    .included li { padding: 10px 0; border-bottom:1px solid var(--line); }
+    .included li::before { content:"✓"; color:#9a761c; font-weight:900; margin-right:10px; }
+
+    form { display:grid; gap:14px; }
+    label { font-weight:700; font-size:.9rem; }
+    input, textarea {
+      width:100%; padding: 13px 14px; border-radius:12px; border:1px solid var(--line); background:white; outline:none;
+    }
+    input:focus, textarea:focus { border-color: var(--copper-500); box-shadow:0 0 0 4px rgba(217,154,90,.15); }
+    textarea { min-height: 160px; resize: vertical; }
+    .contact-mail { padding: 18px; background: rgba(217,154,90,.12); border:1px solid rgba(141,106,22,.14); border-radius: 14px; }
+    .contact-mail a { color: #8b5a2f; font-weight:800; }
+
+    footer { background:var(--navy-950); color:rgba(255,255,255,.64); }
+    .footer-inner { max-width:1180px; margin:0 auto; padding:28px 24px; display:flex; justify-content:space-between; gap:20px; align-items:center; flex-wrap:wrap; }
+    .footer-brand { color:white; font-weight:800; }
+
+    .notice { font-size:.84rem; color:var(--muted); margin-top:16px; }
+    .mini-rule { width:64px; height:3px; background:var(--copper-500); border-radius:99px; margin:18px 0 22px; }
+
+    .status-badge {
+      display:inline-flex; align-items:center; gap:8px; padding:8px 11px; border-radius:999px;
+      font-size:.78rem; font-weight:800; letter-spacing:.05em; text-transform:uppercase;
+      color:#8b5a2f; background:rgba(243,195,139,.23); border:1px solid rgba(168,107,53,.18);
+    }
+    .status-dot { width:8px; height:8px; border-radius:50%; background:#a86b35; box-shadow:0 0 0 5px rgba(168,107,53,.10); }
+    .closed-card {
+      margin-top:16px; padding:16px; border-radius:16px;
+      background:linear-gradient(145deg, rgba(23,166,161,.08), rgba(243,195,139,.10));
+      border:1px dashed rgba(14,100,112,.18);
+    }
+    .btn-closed { background:linear-gradient(135deg,#dde4e5,#eef3f2); color:#67727a; border-color:#ccd8d8; cursor:not-allowed; box-shadow:none; }
+    .btn-closed:hover { transform:none; }
+
+
+    .results-hero {
+      background:
+        radial-gradient(circle at 88% 10%, rgba(125,231,210,.20), transparent 25%),
+        radial-gradient(circle at 12% 88%, rgba(243,195,139,.16), transparent 28%),
+        linear-gradient(145deg, #081827, #0f6070 62%, #0b2136);
+      color:white; border-radius:var(--radius-lg); padding:38px;
+      border:1px solid rgba(125,231,210,.20); box-shadow:0 20px 55px rgba(7,23,39,.18);
+      margin-bottom:26px;
+    }
+    .results-hero p { color:rgba(255,255,255,.74); max-width:760px; margin:0; }
+    .results-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+    .result-card { padding:0; overflow:hidden; position:relative; }
+    .blank-photo { height:210px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; background:
+      linear-gradient(135deg, rgba(15,96,112,.12), rgba(243,195,139,.16)),
+      repeating-linear-gradient(45deg, rgba(19,32,51,.05) 0 12px, rgba(255,255,255,.22) 12px 24px);
+      border-bottom:1px solid var(--line); color:#54707a; }
+    .blank-photo span { font-size:.8rem; font-weight:900; letter-spacing:.18em; color:#3f6871; }
+    .blank-photo small { font-size:.78rem; color:#74848c; }
+    .result-body { padding:22px; }
+    .result-label { color:#a86b35; font-size:.74rem; font-weight:800; text-transform:uppercase; letter-spacing:.11em; }
+    .result-name { display:flex; align-items:end; justify-content:space-between; gap:12px; margin:5px 0 14px; }
+    .result-name h3 { margin:0; }
+    .result-name span { font-size:.78rem; color:var(--muted); font-weight:700; }
+    .weight-chip { display:flex; justify-content:space-between; gap:12px; align-items:center; margin-bottom:14px; padding:11px 13px; border-radius:13px; background:linear-gradient(90deg, rgba(23,166,161,.08), rgba(243,195,139,.10)); border:1px solid rgba(23,166,161,.10); }
+    .weight-chip span { font-size:.76rem; color:var(--muted); text-transform:uppercase; letter-spacing:.06em; font-weight:800; }
+    .weight-chip strong { color:#294e60; font-size:.9rem; }
+    .lift-box { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:13px 14px; border:1px solid var(--line); border-radius:14px; margin-top:10px; background:#fff; }
+    .lift-box div { display:flex; flex-direction:column; gap:2px; }
+    .lift-box span { font-size:.78rem; color:var(--muted); }
+    .lift-box b { font-size:.96rem; color:var(--ink); }
+    .lift-box em { font-style:normal; font-weight:900; font-size:.78rem; color:#0f777b; }
+    .time-line { display:flex; justify-content:space-between; margin-top:15px; padding-top:14px; border-top:1px dashed rgba(19,32,51,.12); font-size:.82rem; color:var(--muted); }
+    .time-line strong { color:#8b5a2f; }
+    .results-note { margin-top:18px; padding:14px 16px; border-radius:14px; background:rgba(125,231,210,.08); border:1px solid rgba(14,100,112,.14); color:#506770; font-size:.86rem; }
+    .results-note strong { color:#315764; }
+    @media (max-width: 900px) { .results-grid { grid-template-columns:1fr; } }
+
+    @media (max-width: 900px) {
+      .hero-inner, .split, .grid-2 { grid-template-columns: 1fr; }
+      .grid-3 { grid-template-columns: 1fr; }
+      .hero-inner { padding-top:80px; }
+      .nav-wrap { align-items:flex-start; flex-direction:column; padding-top:13px; padding-bottom:13px; }
+      .nav-tabs { justify-content:flex-start; overflow-x:auto; width:100%; flex-wrap:nowrap; padding-bottom:2px; }
+      .tab-btn { white-space:nowrap; }
+    }
+    @media (max-width: 560px) {
+      .section { padding: 60px 18px; }
+      .hero-inner { padding:70px 18px 80px; }
+      .nutrition, .callout { padding: 25px; }
+      .feature-image { height: 260px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="site-shell">
+    <header class="topbar">
+      <div class="nav-wrap">
+        <a class="brand" href="#home" onclick="showTab('home'); return false;">
+          <div class="brand-mark" aria-hidden="true">YF</div>
+          <div>
+            <div class="brand-name">Youth Fitnesss</div>
+            <div class="brand-tag">Train smarter. Build stronger. Learn why.</div>
+          </div>
+        </a>
+        <nav class="nav-tabs" aria-label="Main navigation">
+          <button class="tab-btn active" data-tab="home">Home</button>
+          <button class="tab-btn" data-tab="training">Training</button>
+          <button class="tab-btn" data-tab="results">Results</button>
+          <button class="tab-btn" data-tab="nutrition">Nutrition</button>
+          <button class="tab-btn" data-tab="tips">Training Tips</button>
+          <button class="tab-btn" data-tab="about">About</button>
+          <button class="tab-btn" data-tab="contact">Contact</button>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section id="home" class="page active">
+        <div class="hero">
+          <div class="hero-inner">
+            <div>
+              <span class="eyebrow"><span class="dot"></span> Youth strength & nutrition</span>
+              <h1>Build a stronger body. <span class="gold">Understand the process.</span></h1>
+              <p>A simple personal-training project built around practical lifting ideas: hard sets, progressive overload, sensible nutrition, and consistency.</p>
+              <div class="hero-actions">
+                <button class="btn btn-gold" onclick="showTab('training')">Explore Training</button>
+                <button class="btn btn-dark" onclick="showTab('contact')">View Coaching</button>
+              </div>
+            </div>
+            <div class="hero-card">
+              <span class="eyebrow">The core idea</span>
+              <h3 style="font-family:'DM Sans',sans-serif; color:white; font-size:1.7rem; margin-top:10px;">Quality work beats random work.</h3>
+              <p>Track what you do, challenge yourself over time, and give your body enough food and recovery to adapt.</p>
+              <div class="metric-grid">
+                <div class="metric"><strong>0 RIR</strong><span>Very high effort</span></div>
+                <div class="metric"><strong>2 sets</strong><span>A practical starting point</span></div>
+                <div class="metric"><strong>+ load</strong><span>Progressive overload</span></div>
+                <div class="metric"><strong>$35/mo</strong><span>Listed coaching plan</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-head">
+            <div class="kicker">What you will learn</div>
+            <h2>The gym gets easier when the basics make sense.</h2>
+            <p>This site keeps the message straightforward. Train hard, use good technique, recover, and make small improvements instead of chasing complicated routines.</p>
+          </div>
+          <div class="grid-3">
+            <article class="card">
+              <div class="number">01</div>
+              <h3>Train with purpose</h3>
+              <p>Know what each exercise is for, control the reps, and keep a log so your workouts have direction.</p>
+            </article>
+            <article class="card">
+              <div class="number">02</div>
+              <h3>Eat for the goal</h3>
+              <p>Use a calorie deficit for fat loss and a small surplus for gaining size while keeping food quality in perspective.</p>
+            </article>
+            <article class="card">
+              <div class="number">03</div>
+              <h3>Progress over time</h3>
+              <p>More reps, more load, better technique, or improved control can all be signs that your training is moving forward.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="training" class="page">
+        <div class="section">
+          <div class="section-head">
+            <div class="kicker">Training</div>
+            <h2>Simple training principles that actually give you something to track.</h2>
+            <p>The goal is not to make every workout exhausting. The goal is to create a repeatable stimulus and improve it over time.</p>
+          </div>
+          <div class="split">
+            <img class="feature-image" src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&fit=crop&w=1100&q=85" alt="Lifter performing a barbell exercise in a gym" />
+            <div>
+              <h3>0 RIR and training to failure</h3>
+              <div class="mini-rule"></div>
+              <p>RIR means “reps in reserve.” At 0 RIR, you reach the point where you cannot complete another full rep with good form. That level of effort can be useful because it makes the set highly challenging and can help recruit a large amount of muscle.</p>
+              <p>But failure is a tool, not a rule for every set. On big compound lifts, stopping a little earlier can make technique and recovery easier. A practical approach is to use very hard sets when the exercise is controlled and safe, while keeping form as the limit.</p>
+              <div class="callout">
+                <h3>Remember</h3>
+                <p><strong>0 RIR does not mean sloppy reps.</strong> Once technique breaks down, the set is effectively over even if you could force out another ugly rep.</p>
+              </div>
+            </div>
+          </div>
+
+          <div style="height:34px"></div>
+          <div class="split" style="grid-template-columns:1.05fr .95fr;">
+            <div>
+              <h3>Why two hard sets can be enough to start</h3>
+              <div class="mini-rule"></div>
+              <p>Two challenging working sets per exercise can be a practical starting point, especially when the sets are performed with focus and close to your actual limit. More sets are not automatically better if the quality drops or recovery becomes a problem.</p>
+              <p>Think of two sets as a baseline, not a universal law. Some people will benefit from more weekly volume, and some exercises are easier to recover from than others.</p>
+              <div class="card tip-card" style="margin-top:20px;">
+                <h3>Example</h3>
+                <p>Bench press: 2 working sets after warm-ups. Log the reps and weight. Next time, try to beat your previous performance while keeping your technique consistent.</p>
+              </div>
+            </div>
+            <img class="feature-image" src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=1100&q=85" alt="Strength training equipment in a gym" />
+          </div>
+
+          <div style="height:34px"></div>
+          <div class="section-head" style="margin-bottom:24px;">
+            <div class="kicker">Progressive overload</div>
+            <h2>Make the next workout slightly better.</h2>
+            <p>Progressive overload means gradually increasing the challenge placed on your muscles. It can happen in several ways.</p>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>Progression</th><th>What it looks like</th><th>Simple example</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>More weight</td><td>Add a small amount of load.</td><td>185 → 190 lb</td></tr>
+                <tr><td>More reps</td><td>Keep the load and increase reps.</td><td>8 → 9 reps</td></tr>
+                <tr><td>Better technique</td><td>Same load, cleaner and more controlled.</td><td>Deeper squat with control</td></tr>
+                <tr><td>More control</td><td>Improve tempo or range of motion.</td><td>Slower lowering phase</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section id="results" class="page">
+        <div class="section">
+          <div class="section-head">
+            <div class="kicker">Trainee progress</div>
+            <h2>Three lifts. One clear picture of progress.</h2>
+            <p>Each trainee profile is set up to show the same three core compound lifts: bench press, squat, and deadlift. Weight and lift numbers start at zero until real client data is added.</p>
+          </div>
+
+          <div class="results-hero">
+            <div class="kicker" style="color:var(--aqua);">Progress dashboard</div>
+            <h2 style="color:white; margin-top:9px;">Start at zero. Build it up.</h2>
+            <p>Use these profiles as clean placeholders for future clients. Add a permission-approved photo, starting numbers, current numbers, bodyweight, and the number of weeks it took to reach the current result.</p>
+          </div>
+
+          <div class="results-grid">
+            <article class="card result-card">
+              <div class="blank-photo" aria-label="Blank trainee photo placeholder"><span>PHOTO</span><small>Add image here</small></div>
+              <div class="result-body">
+                <div class="result-label">Trainee Profile 01</div>
+                <div class="result-name"><h3>Trainee 01</h3><span>0 weeks</span></div>
+                <div class="weight-chip"><span>Bodyweight</span><strong>0 lb → 0 lb</strong></div>
+                <div class="lift-box"><div><span>Bench Press</span><b>0 lb → 0 lb</b></div><em>+0 lb</em></div>
+                <div class="lift-box"><div><span>Squat</span><b>0 lb → 0 lb</b></div><em>+0 lb</em></div>
+                <div class="lift-box"><div><span>Deadlift</span><b>0 lb → 0 lb</b></div><em>+0 lb</em></div>
+                <div class="time-line"><span>Time to current result</span><strong>0 weeks</strong></div>
+              </div>
+            </article>
+
+            <article class="card result-card">
+              <div class="blank-photo" aria-label="Blank trainee photo placeholder"><span>PHOTO</span><small>Add image here</small></div>
+              <div class="result-body">
+                <div class="result-label">Trainee Profile 02</div>
+                <div class="result-name"><h3>Trainee 02</h3><span>0 weeks</span></div>
+                <div class="weight-chip"><span>Bodyweight</span><strong>0 lb → 0 lb</strong></div>
+                <div class="lift-box"><div><span>Bench Press</span><b>0 lb → 0 lb</b></div><em>+0 lb</em></div>
+                <div class="lift-box"><div><span>Squat</span><b>0 lb → 0 lb</b></div><em>+0 lb</em></div>
+                <div class="lift-box"><div><span>Deadlift</span><b>0 lb → 0 lb</b></div><em>+0 lb</em></div>
+                <div class="time-line"><span>Time to current result</span><strong>0 weeks</strong></div>
+              </div>
+            </article>
+
+            <article class="card result-card">
+              <div class="blank-photo" aria-label="Blank trainee photo placeholder"><span>PHOTO</span><small>Add image here</small></div>
+              <div class="result-body">
+                <div class="result-label">Trainee Profile 03</div>
+                <div class="result-name"><h3>Trainee 03</h3><span>0 weeks</span></div>
+                <div class="weight-chip"><span>Bodyweight</span><strong>0 lb → 0 lb</strong></div>
+                <div class="lift-box"><div><span>Bench Press</span><b>0 lb → 0 lb</b></div><em>+0 lb</em></div>
+                <div class="lift-box"><div><span>Squat</span><b>0 lb → 0 lb</b></div><em>+0 lb</em></div>
+                <div class="lift-box"><div><span>Deadlift</span><b>0 lb → 0 lb</b></div><em>+0 lb</em></div>
+                <div class="time-line"><span>Time to current result</span><strong>0 weeks</strong></div>
+              </div>
+            </article>
+          </div>
+
+          <div class="results-note"><strong>Placeholder setup:</strong> Every number is currently 0 and every image area is blank so you can add real, permission-approved trainee information later.</div>
+        </div>
+      </section>
+
+      <section id="nutrition" class="page">
+        <div class="section">
+          <div class="section-head">
+            <div class="kicker">Nutrition</div>
+            <h2>Calories decide the direction. Food quality helps decide how you feel.</h2>
+            <p>You do not need a perfect diet. You need a calorie target that matches your goal and enough protein, carbohydrates, fats, and micronutrients to support it.</p>
+          </div>
+          <div class="grid-2">
+            <article class="card">
+              <div class="number">01</div>
+              <h3>Fat loss: calorie deficit</h3>
+              <p>A calorie deficit means eating fewer calories than you use over time. That creates the energy gap needed for body weight to trend downward.</p>
+              <div class="pill-row" style="margin-top:22px;">
+                <span class="pill" style="background:rgba(16,51,35,.07); border-color:rgba(16,51,35,.1);">Small, sustainable deficit</span>
+                <span class="pill" style="background:rgba(16,51,35,.07); border-color:rgba(16,51,35,.1);">High protein</span>
+                <span class="pill" style="background:rgba(16,51,35,.07); border-color:rgba(16,51,35,.1);">Keep lifting</span>
+              </div>
+            </article>
+            <article class="card">
+              <div class="number">02</div>
+              <h3>Muscle gain: calorie surplus</h3>
+              <p>A calorie surplus means eating more energy than you use. A modest surplus can support muscle growth while limiting unnecessary fat gain.</p>
+              <div class="pill-row" style="margin-top:22px;">
+                <span class="pill" style="background:rgba(16,51,35,.07); border-color:rgba(16,51,35,.1);">Modest surplus</span>
+                <span class="pill" style="background:rgba(16,51,35,.07); border-color:rgba(16,51,35,.1);">Protein at meals</span>
+                <span class="pill" style="background:rgba(16,51,35,.07); border-color:rgba(16,51,35,.1);">Carbs for training</span>
+              </div>
+            </article>
+          </div>
+
+          <div style="height:24px"></div>
+          <div class="nutrition">
+            <h3>What to avoid making a habit</h3>
+            <p>“Avoid” does not mean “never eat.” It means do not let these habits crowd out the foods that make your goal easier.</p>
+            <div class="avoid-list">
+              <div class="avoid"><span>•</span><div><b>Crash diets:</b> huge calorie cuts can make training and recovery harder.</div></div>
+              <div class="avoid"><span>•</span><div><b>All-or-nothing rules:</b> one meal does not ruin a week.</div></div>
+              <div class="avoid"><span>•</span><div><b>Living on ultra-processed snacks:</b> easy to overeat and often low in filling nutrients.</div></div>
+              <div class="avoid"><span>•</span><div><b>Skipping protein:</b> spread protein-rich foods through the day.</div></div>
+              <div class="avoid"><span>•</span><div><b>Ignoring hydration and sleep:</b> nutrition works better when recovery is handled too.</div></div>
+            </div>
+          </div>
+          <p class="notice">For teens and young athletes, aggressive dieting or weight-cutting should be discussed with a qualified healthcare professional or registered dietitian, especially when still growing.</p>
+        </div>
+      </section>
+
+      <section id="tips" class="page">
+        <div class="section">
+          <div class="section-head">
+            <div class="kicker">Training tips</div>
+            <h2>The small details that make a simple program work better.</h2>
+          </div>
+          <div class="grid-3">
+            <article class="card tip-card"><h3>Warm up for the movement</h3><p>Use lighter sets to practice the movement and prepare for your working weight. You do not need a marathon warm-up.</p></article>
+            <article class="card tip-card"><h3>Write your lifts down</h3><p>Record weight, reps, and how hard the set felt. Memory is not a very good progressive-overload system.</p></article>
+            <article class="card tip-card"><h3>Keep form repeatable</h3><p>A stronger rep is one you can reproduce. Do not change range of motion just to claim extra weight.</p></article>
+            <article class="card tip-card"><h3>Rest long enough</h3><p>For hard strength or hypertrophy work, give yourself enough rest to produce another quality set.</p></article>
+            <article class="card tip-card"><h3>Recover on purpose</h3><p>Sleep, food, hydration, and easier days are part of training, not time wasted away from the gym.</p></article>
+            <article class="card tip-card"><h3>Do not copy every trend</h3><p>A simple routine that you can progress for months beats a complicated routine that you abandon after two weeks.</p></article>
+          </div>
+
+          <div class="callout" style="margin-top:28px;">
+            <div class="kicker" style="color:var(--copper-400);">My rule of thumb</div>
+            <h2 style="color:white; margin-top:10px;">Push the set. Respect the rep.</h2>
+            <p>Training hard matters. Training hard with consistent technique, smart exercise selection, and enough recovery matters more.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="about" class="page">
+        <div class="section">
+          <div class="split">
+            <img class="feature-image" src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1200&q=85" alt="Modern gym interior with strength equipment" />
+            <div>
+              <div class="kicker">About the project</div>
+              <h2>Built as a real learning project, not just a website.</h2>
+              <div class="mini-rule"></div>
+              <p>Youth Fitnesss was created as part of my <strong>senior capstone and junior project work</strong>. The idea is to take something I already care about, training, and turn it into a useful project that combines research, design, communication, and entrepreneurship.</p>
+              <p>The site is intentionally simple. Instead of throwing a hundred exercises at someone, it focuses on principles that are easy to understand and track: effort, volume, progressive overload, calories, and consistency.</p>
+              <p>The bigger goal is learning how to explain fitness concepts clearly while building a professional-looking service around them.</p>
+            </div>
+          </div>
+
+          <div style="height:40px"></div>
+          <div class="grid-3">
+            <article class="card"><div class="number">01</div><h3>Research</h3><p>Learn why common training and nutrition practices work instead of blindly copying routines.</p></article>
+            <article class="card"><div class="number">02</div><h3>Build</h3><p>Create a clear experience that feels like a real personal-training brand and not a school worksheet.</p></article>
+            <article class="card"><div class="number">03</div><h3>Apply</h3><p>Turn the concepts into simple guidance that people can use in their own gym routine.</p></article>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" class="page">
+        <div class="section">
+          <div class="section-head">
+            <div class="kicker">Contact & coaching</div>
+            <h2>Ready to make your training more consistent?</h2>
+            <p>Personal training is listed at <strong>$35 per month</strong>. Coaching applications are temporarily closed while this project is being developed, but you can still email me with questions or project feedback.</p>
+          </div>
+          <div class="grid-2">
+            <div class="card price-card">
+              <div class="kicker">Monthly coaching</div>
+              <div class="price">$35 <small>/ month</small></div>
+              <p>Simple, approachable guidance built around training consistency and measurable progress.</p>
+              <ul class="included">
+                <li>Personal training guidance</li>
+                <li>Exercise and workout recommendations</li>
+                <li>Progressive-overload direction</li>
+                <li>Basic nutrition guidance</li>
+                <li>Goal-focused check-ins</li>
+              </ul>
+              <div class="closed-card">
+                <div class="status-badge"><span class="status-dot"></span> Applications temporarily closed</div>
+                <p style="margin-top:10px;">I am not accepting new coaching applications right now. The $35/month plan will stay listed as part of the project while I finish the program and continue developing the service.</p>
+              </div>
+              <button class="btn btn-closed" type="button" disabled>Apply for Coach — Temporarily Closed</button>
+              <p class="notice">You can still use the message form or email below for questions.</p>
+            </div>
+            <div class="card">
+              <h3>Send a message</h3>
+              <form onsubmit="openEmail(event)">
+                <div>
+                  <label for="name">Name</label>
+                  <input id="name" type="text" placeholder="Your name" required />
+                </div>
+                <div>
+                  <label for="email">Email</label>
+                  <input id="email" type="email" placeholder="you@example.com" required />
+                </div>
+                <div>
+                  <label for="message">What can I help with?</label>
+                  <textarea id="message" placeholder="Tell me about your goal, current routine, or what you want help with." required></textarea>
+                </div>
+                <button class="btn btn-gold" type="submit">Open Email</button>
+              </form>
+              <div class="contact-mail" style="margin-top:18px;">
+                Prefer email? <a href="mailto:yourname@example.com">yourname@example.com</a>
+              </div>
+            </div>
+          </div>
+          <p class="notice">This site is an educational project. Fitness and nutrition guidance is general information and is not a substitute for individualized medical, dietary, or professional advice.</p>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-inner">
+        <div><div class="footer-brand">Youth Fitnesss</div><div style="font-size:.86rem;">Train smarter. Get stronger. Learn why.</div></div>
+        <div style="font-size:.84rem;">Senior Capstone • Junior Project • $35/month coaching plan</div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    const buttons = document.querySelectorAll('.tab-btn');
+    const pages = document.querySelectorAll('.page');
+
+    function showTab(tabName) {
+      pages.forEach(page => page.classList.toggle('active', page.id === tabName));
+      buttons.forEach(btn => btn.classList.toggle('active', btn.dataset.tab === tabName));
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      history.replaceState(null, '', '#' + tabName);
+    }
+
+    buttons.forEach(btn => btn.addEventListener('click', () => showTab(btn.dataset.tab)));
+
+    function openEmail(event) {
+      event.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const message = document.getElementById('message').value.trim();
+      const subject = encodeURIComponent('Youth Fitnesss Coaching Inquiry');
+      const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`);
+      window.location.href = `mailto:yourname@example.com?subject=${subject}&body=${body}`;
+    }
+
+    const initial = (location.hash || '#home').slice(1);
+    if ([...pages].some(p => p.id === initial)) showTab(initial);
+  </script>
+</body>
+</html>
